@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-2">UserName</div>
+            <div class="col-4"><input type="text" id="userName" /></div>
+        </div>
+       
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-6">
+                <input type="button" id="loginButton" value="登录" />
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="row">
+    <div class="col">
+      <span>
+          我
+      </span>
+       <video height="240" id="localVideo" autoplay playsinline controls></video>
+    </div>
+    <div class="col">
+       <span>
+          对方
+      </span>
+       <video height="240" id="remoteVideo" autoplay playsinline controls></video>
+    </div>
+  </div>
+    
+
+
+    <div class="row">
+        <div class="col-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <ul id="messagesList">
+                @* <li>userName <button onclick="connVideo(userName)">连接</button></li> *@
+            </ul>
+        </div>
+    </div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/videoConn.js"></script>
