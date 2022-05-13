@@ -27,7 +27,6 @@ document.getElementById("loginButton").addEventListener("click", function (event
     connection.invoke("Login", userName).catch(function (err) {
         return console.error(err.toString());
     });
-    event.preventDefault();
 });
 
 //监听上线事件，加入列表
