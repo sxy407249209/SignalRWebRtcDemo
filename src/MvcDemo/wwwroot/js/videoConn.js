@@ -84,7 +84,7 @@ yourConn.onicecandidate = function (event) {
     }
 };
 
-//开始连接
+//请求连接
 function connVideo(bName) {
     var aName = document.getElementById("userName").value;
     localStorage.setItem("aName", aName);
@@ -94,7 +94,7 @@ function connVideo(bName) {
     });
 }
 
-//监听对面是否同意视频
+//收到连接请求 并出处理
 connection.on("ReceiveVideoCall", function (msg, aName, bName) {
 
     console.log(aName)
@@ -102,10 +102,12 @@ connection.on("ReceiveVideoCall", function (msg, aName, bName) {
     localStorage.setItem("aName", aName);
     localStorage.setItem("bName", bName); 
     if (window.confirm(msg)) {
+        //发给A同意
         connection.invoke("IsAgreeVideo", aName,"是").catch(function (err) {
             return console.error(err.toString());
         });
     } else {
+        //发给A不同意
         connection.invoke("IsAgreeVideo", aName,"否").catch(function (err) {
             return console.error(err.toString());
         });
@@ -123,7 +125,7 @@ connection.on("ReceiveIsAgreeVideo", function (isAgree) {
     }
 });
 
-//A呼叫B
+//A 发送 B WebRtc请求 SendOffer
 function call(bName) {
     if (bName.length > 0) {
         yourConn.createOffer({
@@ -141,7 +143,7 @@ function call(bName) {
     }
 }
 
-//监听呼叫
+//B接收Offer并向A回复Answer
 connection.on("ReceiveOffer", function (offerStr) {
     var offer = JSON.parse(offerStr);
     yourConn.setRemoteDescription(new RTCSessionDescription(offer));
@@ -157,7 +159,7 @@ connection.on("ReceiveOffer", function (offerStr) {
     });
 });
 
-//监听呼叫回复
+//A接收BAnswer 修改远程描述
 connection.on("ReceiveWasCallAnswer", function (answerStr) {
     var answer = JSON.parse(answerStr);
     //更改远程描述
@@ -165,7 +167,7 @@ connection.on("ReceiveWasCallAnswer", function (answerStr) {
 
 });
 
-//处理ice候选
+//处理Candidate事件
 connection.on("ReceiveCandidate", function (candidateStr) {
     var candidate = JSON.parse(candidateStr);
     //更改远程描述
