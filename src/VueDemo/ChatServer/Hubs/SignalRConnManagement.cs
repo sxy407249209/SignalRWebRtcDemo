@@ -1,6 +1,6 @@
 namespace ChatServer.Hubs
 {
-   /// <summary>
+    /// <summary>
     /// Signal连接处理
     /// </summary>
     public static class SignalRConnManagement
